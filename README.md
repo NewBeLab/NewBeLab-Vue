@@ -1,5 +1,6 @@
 # NewBeLab-Vue
-![vue](https://img.shields.io/badge/Vue-v3.2.36-brightgreen)
+![vue](https://img.shields.io/badge/Vue-v3.2.36-brightgreen)  
+[バックエンド](https://github.com/nyohoo/NewBeLab-Rails)
 ## サービス概要  
 チーム開発に興味を持つ未経験エンジニアに   
 チームメンバーとマッチングする機会を与える  
@@ -49,6 +50,40 @@
 東京都ハッカソンの盛り上がりを受け、「RUNTEQ内でチーム開発したい！」という声をよく聞くものの、それを実現まで引き上げてくれる革新的なプロダクトは存在しませんでした。  
 マッチングの場を提供することで、チーム開発市場の活性化につながればと考えました。
 
+## 使用技術
+**フロントエンド**
+<ul>
+  <li>Vue.js </li>
+  <details>
+    <summary>主要yarnパッケージ</summary>
+    <ul>
+      <li><a href="https://github.com/vuetifyjs/vuetify">vuetify</a></li>
+    </ul>
+  </deatails>
+</ul>
+
+**バックエンド**
+<ul>
+  <li>Ruby 3.1.2</li>
+  <li>Rails 6.1.6</li>
+  <details>
+    <summary>主要gem</summary>
+    <ul>
+      <li><a href="https://github.com/kpumuk/meta-tags">meta-tags</a></li>
+    </ul>
+  </deatails>
+</ul>
+  
+**インフラ**
+- Heroku
+- PostgreSQL
+
+## ■画面遷移図  
+[画面遷移図](https://www.figma.com/file/4qNkWlpNYBCOanfeoda0Ek/team_matching?node-id=0%3A1)
+
+## ■ ER図
+  [![image.png](https://i.gyazo.com/3618bfea6db2bb3a950ee6075daf9e85.png)](https://gyazo.com/3618bfea6db2bb3a950ee6075daf9e85)
+=======
 ## スケジュール
 企画〜技術調査：　済  
 README〜ER図作成：11/4  

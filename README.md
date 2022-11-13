@@ -1,4 +1,5 @@
 # NewBeLab-Vue
+![vue](https://img.shields.io/badge/Vue-v3.2.36-brightgreen)
 ## サービス概要  
 チーム開発に興味を持つ未経験エンジニアに   
 チームメンバーとマッチングする機会を与える  

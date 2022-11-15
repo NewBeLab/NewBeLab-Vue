@@ -1,5 +1,5 @@
 # NewBeLab-Vue
-![vue](https://img.shields.io/badge/Vue-v3.2.36-brightgreen)  
+![vue](https://img.shields.io/badge/Vue-v3.2.38-brightgreen)  
 [バックエンド](https://github.com/nyohoo/NewBeLab-Rails)
 ## サービス概要  
 チーム開発に興味を持つ未経験エンジニアに   

@@ -1,11 +1,9 @@
 <template>
-  <v-app>
-    <v-main>
-      <HelloWorld />
-    </v-main>
-  </v-app>
+  <router-view />
 </template>
 
-<script setup>
-  import HelloWorld from '@/components/HelloWorld.vue'
+<script>
+export default {
+  name: 'App',
+}
 </script>

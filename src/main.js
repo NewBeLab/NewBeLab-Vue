@@ -10,11 +10,14 @@ import App from './App.vue'
 // Composables
 import { createApp } from 'vue'
 
+// VueRouter
+import router from './plugins/router'
+
 // Plugins
 import { registerPlugins } from '@/plugins'
 import vuetify from './plugins/vuetify'
 
-const app = createApp(App)
+const app = createApp(App).use(router).mount('#app')
 
 registerPlugins(app)
 

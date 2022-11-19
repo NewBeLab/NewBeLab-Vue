@@ -10,17 +10,33 @@ import App from './App.vue'
 // Composables
 import { createApp } from 'vue'
 
-// VueRouter
-import router from './plugins/router'
-
 // Plugins
 import { registerPlugins } from '@/plugins'
+
+// vuetify
 import vuetify from './plugins/vuetify'
 
-const app = createApp(App).use(router).mount('#app')
+// vue-router
+import router from './plugins/router'
+
+// pinia
+import { createPinia } from 'pinia'
+
+// axios
+// https://www.npmjs.com/package/vue-axios こちらを参考に設定
+// .provide('axios', app.config.globalProperties.axios) がないとthis.$axiosが使えない?
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+const pinia = createPinia()
+const app = createApp(App)
 
 registerPlugins(app)
 
 app
   .use(vuetify)
+  .use(router)
+  .use(pinia)
+  .use(VueAxios, axios)
+  .provide('axios', app.config.globalProperties.axios) 
   .mount('#app')

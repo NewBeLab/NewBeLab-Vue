@@ -29,14 +29,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 const pinia = createPinia()
+
 const app = createApp(App)
-
-registerPlugins(app)
-
-app
   .use(vuetify)
   .use(router)
   .use(pinia)
   .use(VueAxios, axios)
-  .provide('axios', app.config.globalProperties.axios) 
+  .provide('axios', app.config.globalProperties.axios)
   .mount('#app')
+
+registerPlugins(app)

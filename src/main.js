@@ -17,10 +17,9 @@ import router from './plugins/router'
 import { registerPlugins } from '@/plugins'
 import vuetify from './plugins/vuetify'
 
-const app = createApp(App).use(router).mount('#app')
+const app = createApp(App)
+  .use(vuetify)
+  .use(router)
+  .mount('#app')
 
 registerPlugins(app)
-
-app
-  .use(vuetify)
-  .mount('#app')

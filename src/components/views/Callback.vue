@@ -2,31 +2,44 @@
   <div></div>
 </template>
 
-<script>
-// githubからのリダイレクト先
-// このコンポーネントは、githubからのcallbackで呼び出される
-// tokenをpiniaを利用してstoreに保存する
-// 保存後は、/homeに遷移する
-
+<script setup>
 import { useAuthStore } from '@/stores/auth'
+import { useRoute } from 'vue-router'
+import { inject , onMounted } from 'vue'
 
-export default {
-  name: 'Callback',
-  setup() {
-    const store = useAuthStore()
-    const router = useRouter()
+// onMountedでDOMが作成された後にログイン処理を実行するようにしている
+onMounted( () => {
+  // vue3では$routeでクエリー情報を取得できないので、useRouteを使う
+  const route = useRoute();
 
-    // githubからのリダイレクトで渡されるtokenとuserを取得する
-    const token = router.currentRoute.value.query.token
-    const user = router.currentRoute.value.query.user
+// route.queryには、リダイレクトされた際に付与されたクエリパラメータが格納されている
+// 今回は、access_token、client_id、expiry、uidが格納されている
+const { auth_token, client_id, expiry, uid } = route.query;
 
-    // tokenとuserをstoreに保存する
-    store.login(token, user)
+const authStore = useAuthStore();
+// クエリパラメータから取得した値を、authStoreのtokenのstateに格納する
+authStore.setAuth({
+  'access-token': auth_token,
+  'client': client_id,
+  'expiry': expiry,
+  'uid': uid,
+});
 
-    // 保存後は、/homeに遷移する
-    router.push({ name: 'Home' })
+// axiosの処理は'ploguins/axios.js'にてプラグインとして共通処理化している
+// 共通処理の内容としては、authStoreのtokenをheadersにセットしている。
+const axios = inject('axios');
 
-    return {}
-  }
-}
+// auth/validate_tokenにリクエストを送ることで、user情報を取得できる
+axios.get('/auth/validate_token')
+  .then( (respnse) => {
+    // responseで取得したuser情報のデータは、'plugins/axios.js'にて
+    // storeのuserに格納しているため、ここではTOPページへの遷移のみを行う
+    window.location.href = '/';
+  })
+  .catch( (error) => {
+    alert("ログインに失敗しました。再度ログインしてください。");
+    window.location.href = '/login';
+  });
+});
+
 </script>

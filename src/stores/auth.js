@@ -1,4 +1,3 @@
-// piniaを利用して、認証情報を管理する
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
@@ -6,12 +5,11 @@ export const useAuthStore = defineStore('auth', {
     token: null,
     user: null,
   }),
-  getters: {
-    isAuthenticated: (state) => !!state.token,
-  },
   actions: {
-    login(token, user) {
+    setAuth(token) {
       this.token = token
+    },
+    setUser(user) {
       this.user = user
     },
     logout() {

@@ -1,11 +1,5 @@
 <template>
-  <v-container fluid fill-height>
-    <v-layout align-center justify-center>
-      <v-card class="elevation-1 pa-3">
-        <v-btn :href="GITHUB_URL"> GitHubログイン </v-btn>
-      </v-card>
-    </v-layout>
-  </v-container>
+  <v-btn :href="GITHUB_URL" elevation="3">GitHubログイン</v-btn>
 </template>
 
 <script setup>

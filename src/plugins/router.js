@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "@/components/views/Login.vue";
 import Callback from "@/components/views/Callback.vue";
 import Top from "@/components/views/Top.vue";
 import Mypage from "@/components/views/Mypage.vue";
@@ -7,11 +6,6 @@ import User from "@/components/views/User.vue";
 import Idea from "@/components/views/Idea.vue";
 
 const routes = [
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-  },
   {
     path: "/callback",
     name: "Callback",

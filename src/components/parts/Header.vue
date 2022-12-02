@@ -11,6 +11,8 @@
         >
       </v-btn>
 
+      <LoginButton />
+
       <v-responsive max-width="260">
         <v-text-field
           density="compact"
@@ -23,7 +25,10 @@
 </template>
 
 <script>
+import LoginButton from "@/components/parts/LoginButton.vue";
+
 export default {
+  components: { LoginButton },
   data() {
     return {
       links: [

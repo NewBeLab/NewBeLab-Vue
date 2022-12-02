@@ -1,6 +1,10 @@
 <template>
   <Header />
-  <h1>Idea</h1>
+  <v-main class="bg-grey-lighten-3">
+    <v-container>
+      <h1>Idea</h1>
+    </v-container>
+  </v-main>
 </template>
 
 <script>

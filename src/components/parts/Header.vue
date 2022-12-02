@@ -24,28 +24,21 @@
   </v-app-bar>
 </template>
 
-<script>
+<script setup>
 import LoginButton from "@/components/parts/LoginButton.vue";
 
-export default {
-  components: { LoginButton },
-  data() {
-    return {
-      links: [
-        {
-          name: "Mypage",
-          name_ja: "マイページ",
-        },
-        {
-          name: "User",
-          name_ja: "ユーザーを探す",
-        },
-        {
-          name: "Idea",
-          name_ja: "アイデアを探す",
-        },
-      ],
-    };
+const links = [
+  {
+    name: "Mypage",
+    name_ja: "マイページ",
   },
-};
+  {
+    name: "User",
+    name_ja: "ユーザーを探す",
+  },
+  {
+    name: "Idea",
+    name_ja: "アイデアを探す",
+  },
+];
 </script>

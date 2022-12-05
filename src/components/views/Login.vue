@@ -57,3 +57,10 @@ const GITHUB_URL =
   import.meta.env.VITE_SERVICE_URL + 'callback'
 
 </script>
+
+<style scoped>
+/* iframeで表示しているgifをクリックした際に、ページ遷移しないようにCSSをあてている */
+iframe{
+  pointer-events:none;
+}
+</style>

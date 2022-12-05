@@ -1,9 +1,14 @@
 <template>
   <v-app-bar flat>
     <v-container class="fill-height d-flex align-center">
+      <!-- 共通ヘッダー -->
+      <div class="mr-10 ml-10">
+        <router-link :to="{ name: 'Top' }">NewBeLab</router-link>
+      </div>
+      <!-- 共通ヘッダーここまで -->
       <div v-if="loggedIn">
         <!-- ログイン時のヘッダー -->
-        <v-avatar class="mr-10 ml-4" color="grey-darken-1" size="32">
+        <v-avatar class="mr-4 ml-10" color="grey-darken-1" size="32">
           <img :src="authStore.user.image" width="32" height="32" />
         </v-avatar>
 

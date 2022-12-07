@@ -1,35 +1,41 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import RouterTestFirst from '@/components/views/RouterTestFirst.vue'
-import RouterTestSecond from '@/components/views/RouterTestSecond.vue'
-import Login from '@/components/views/Login.vue'
-import Callback from '@/components/views/Callback.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import Callback from "@/components/views/Callback.vue";
+import Top from "@/components/views/Top.vue";
+import Mypage from "@/components/views/Mypage.vue";
+import User from "@/components/views/User.vue";
+import Idea from "@/components/views/Idea.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'routerTestFirst',
-    component: RouterTestFirst
+    path: "/callback",
+    name: "Callback",
+    component: Callback,
   },
   {
-    path: '/second',
-    name: 'routerTestSecond',
-    component: RouterTestSecond
+    path: "/",
+    name: "Top",
+    component: Top,
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login
+    path: "/mypage",
+    name: "Mypage",
+    component: Mypage,
   },
   {
-    path: '/callback',
-    name: 'callback',
-    component: Callback
-  }
-]
+    path: "/user",
+    name: "User",
+    component: User,
+  },
+  {
+    path: "/idea",
+    name: "Idea",
+    component: Idea,
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

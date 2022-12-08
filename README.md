@@ -58,6 +58,9 @@
     <summary>主要yarnパッケージ</summary>
     <ul>
       <li><a href="https://github.com/vuetifyjs/vuetify">vuetify</a></li>
+      <li><a href="https://github.com/vuejs/pinia">pinia</a></li>
+      <li><a href="https://github.com/vuejs/router">vue-router</a></li>
+      <li><a href="https://github.com/imcvampire/vue-axios">vue-axios</a></li>
     </ul>
   </deatails>
 </ul>

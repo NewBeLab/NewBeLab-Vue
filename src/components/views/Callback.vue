@@ -39,7 +39,7 @@ onMounted(() => {
     })
     .catch((error) => {
       alert("ログインに失敗しました。再度ログインしてください。");
-      window.location.href = "/login";
+      window.location.href = "/";
     });
 });
 </script>

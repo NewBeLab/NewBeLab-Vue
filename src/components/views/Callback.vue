@@ -4,13 +4,15 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
-import { useRoute } from "vue-router";
+import { useAlertStore } from "@/stores/alert";
+import { useRoute, useRouter } from "vue-router";
 import { inject, onMounted } from "vue";
 
 // onMountedでDOMが作成された後にログイン処理を実行するようにしている
 onMounted(() => {
   // vue3では$routeでクエリー情報を取得できないので、useRouteを使う
   const route = useRoute();
+  const router = useRouter();
 
   // route.queryには、リダイレクトされた際に付与されたクエリパラメータが格納されている
   // 今回は、access_token、client_id、expiry、uidが格納されている
@@ -29,17 +31,23 @@ onMounted(() => {
   // 共通処理の内容としては、authStoreのtokenをheadersにセットしている。
   const axios = inject("axios");
 
+  const alertStore = useAlertStore();
+
   // auth/validate_tokenにリクエストを送ることで、user情報を取得できる
   axios
     .get("/auth/validate_token")
     .then((respnse) => {
       // responseで取得したuser情報のデータは、'plugins/axios.js'にて
       // storeのuserに格納しているため、ここではTOPページへの遷移のみを行う
-      window.location.href = "/";
+      alertStore.setAlert("ログインしました");
+      router.push("/");
     })
     .catch((error) => {
-      alert("ログインに失敗しました。再度ログインしてください。");
-      window.location.href = "/";
+      alertStore.setAlert(
+        "ログインに失敗しました。再度ログインしてください",
+        "error"
+      );
+      router.push("/");
     });
 });
 </script>

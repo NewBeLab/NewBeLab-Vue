@@ -6,7 +6,7 @@ import { useCookies } from "vue3-cookies";
 
 axios.interceptors.request.use((request) => {
   const headers = useAuthStore();
-  request.headers = headers;
+  request.headers = headers.token;
 });
 
 export const axiosInstance = axios.create({
@@ -29,9 +29,6 @@ axiosInstance.interceptors.response.use((response) => {
   const authStore = useAuthStore();
   const { cookies } = useCookies();
 
-  // user情報をstoreに格納する
-  authStore.setUser(response.data.data);
-
   // tokenをstoreに格納する
   authStore.setAuth({
     "access-token": response.headers["access-token"],
@@ -41,9 +38,9 @@ axiosInstance.interceptors.response.use((response) => {
   });
 
   // tokenとuserをcookieに格納する
-  if (authStore.user === undefined) {
+  if (authStore.user === null) {
     // ログアウト状態のとき
-    cookies.set("session", {
+    cookies.set("token", {
       "access-token": authStore.token["access-token"],
       client: authStore.token["client"],
       expiry: authStore.token["expiry"],
@@ -51,14 +48,19 @@ axiosInstance.interceptors.response.use((response) => {
     });
   } else {
     // ログイン状態のとき
-    cookies.set("session", {
+    cookies.set("token", {
       "access-token": authStore.token["access-token"],
       client: authStore.token["client"],
       expiry: authStore.token["expiry"],
-      id: authStore.user["id"],
       uid: authStore.token["uid"],
+    });
+    cookies.set("user", {
+      id: authStore.user["id"],
       name: authStore.user["name"],
       image: authStore.user["image"],
     });
   }
+
+  // 共通処理が終わった後にレスポンスを返す
+  return response;
 });

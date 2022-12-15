@@ -14,6 +14,9 @@
       <v-card elevation="2">
         <v-card-title>
           {{ authStore.user.name }}
+          <v-chip v-if="!!myProfile.grade">
+            {{ `${myProfile.grade}期生` }}
+          </v-chip>
         </v-card-title>
         <v-card-subtitle>
           {{
@@ -24,33 +27,30 @@
         </v-card-subtitle>
         <v-card-text>
           <div>
-            モチベーション：{{
-              !!myProfile.motivation ? myProfile.motivation : "未設定"
-            }}
-          </div>
-          <div>
-            学習フェーズ：{{ !!myProfile.phase ? myProfile.phase : "未設定" }}
-          </div>
-          <div>
-            チーム開発にコミットできる度合い：{{
+            コミット：{{
               !!myProfile.commitment ? myProfile.commitment : "未設定"
             }}
           </div>
           <div>
-            希望ポジション：{{
+            ポジション：{{
               !!myProfile.position ? myProfile.position : "未設定"
             }}
           </div>
           <div>
-            好きなエディター：{{
+            熱量：{{ !!myProfile.motivation ? myProfile.motivation : "未設定" }}
+          </div>
+          <div>
+            フェーズ：{{ !!myProfile.phase ? myProfile.phase : "未設定" }}
+          </div>
+          <div>
+            好きなエディタ：{{
               !!myProfile.editor ? myProfile.editor : "未設定"
             }}
           </div>
           <div>
-            グレード：{{ !!myProfile.grade ? myProfile.grade : "未設定" }}
-          </div>
-          <div>
-            Mattermost：{{ !!myProfile.grade ? myProfile.grade : "未設定" }}
+            Mattermost URL：{{
+              !!myProfile.timesLink ? myProfile.timesLink : "未設定"
+            }}
           </div>
         </v-card-text>
       </v-card>

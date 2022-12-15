@@ -64,18 +64,18 @@ import { inject, onMounted, ref } from "vue";
 import Header from "@/components/parts/Header.vue";
 import Alert from "@/components/parts/Alert.vue";
 import { useAuthStore } from "@/stores/auth";
+import { toCamelCaseObject } from "@/plugins/convert";
 
 const authStore = useAuthStore();
-
+const axios = inject("axios");
 const myProfile = ref([]);
 
 onMounted(() => {
   // 自分のプロフィール情報を取得
-  const axios = inject("axios");
   axios
     .get(`/profiles/${authStore.user.id}`)
     .then((response) => {
-      myProfile.value = response.data;
+      myProfile.value = toCamelCaseObject(response.data);
     })
     .catch((error) => {
       console.log(error);

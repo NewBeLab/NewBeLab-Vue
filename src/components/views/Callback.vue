@@ -45,7 +45,7 @@ onMounted(() => {
       const { cookies } = useCookies();
       cookies.set("user", response.data.data);
       alertStore.setAlert("ログインしました");
-      router.push("/");
+      router.push("/mypage");
     })
     .catch((error) => {
       alertStore.setAlert(

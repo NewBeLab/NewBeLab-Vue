@@ -7,24 +7,30 @@ export const setCookie = () => {
   const authStore = useAuthStore();
   const { cookies } = useCookies();
 
-  // cookieにsessionがある場合
-  if (cookies.get("session")) {
+  // cookieにtokenがある場合
+  if (cookies.get("token")) {
     // cookieの値をstoreに格納する
     authStore.setAuth({
-      "access-token": cookies.get("session")["access-token"],
-      client: cookies.get("session")["client"],
-      expiry: cookies.get("session")["expiry"],
-      uid: cookies.get("session")["uid"],
+      "access-token": cookies.get("token")["access-token"],
+      client: cookies.get("token")["client"],
+      expiry: cookies.get("token")["expiry"],
+      uid: cookies.get("token")["uid"],
     });
+  }
+
+  // cookieにuserがある場合
+  if (cookies.get("user")) {
+    // cookieの値をstoreに格納する
     authStore.setUser({
-      id: cookies.get("session")["id"],
-      name: cookies.get("session")["name"],
-      image: cookies.get("session")["image"],
+      id: cookies.get("user")["id"],
+      name: cookies.get("user")["name"],
+      image: cookies.get("user")["image"],
     });
   }
 };
 
 export const removeCookie = () => {
   const { cookies } = useCookies();
-  cookies.remove("session");
+  cookies.remove("token");
+  cookies.remove("user");
 };

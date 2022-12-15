@@ -7,6 +7,7 @@ import { useAuthStore } from "@/stores/auth";
 import { useAlertStore } from "@/stores/alert";
 import { useRoute, useRouter } from "vue-router";
 import { inject, onMounted } from "vue";
+import { useCookies } from "vue3-cookies";
 
 // onMountedでDOMが作成された後にログイン処理を実行するようにしている
 onMounted(() => {
@@ -36,9 +37,13 @@ onMounted(() => {
   // auth/validate_tokenにリクエストを送ることで、user情報を取得できる
   axios
     .get("/auth/validate_token")
-    .then((respnse) => {
-      // responseで取得したuser情報のデータは、'plugins/axios.js'にて
-      // storeのuserに格納しているため、ここではTOPページへの遷移のみを行う
+    .then((response) => {
+      // 取得したuser情報をauthStoreのuserのstateに格納する
+      authStore.setUser(response.data.data);
+
+      // 取得したuser情報をCookieに格納する
+      const { cookies } = useCookies();
+      cookies.set("user", response.data.data);
       alertStore.setAlert("ログインしました");
       router.push("/");
     })

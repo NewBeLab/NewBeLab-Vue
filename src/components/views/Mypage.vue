@@ -4,15 +4,15 @@
     <v-container>
       <Alert />
       <h1>マイページ</h1>
-      <v-avatar color="grey-darken-1" size="144">
-        <img
-          :src="!!authStore.user ? authStore.user.image : ''"
-          width="144"
-          height="144"
-        />
-      </v-avatar>
-      <v-card elevation="2">
+      <v-card elevation="2" width="100%">
         <v-card-title>
+          <v-avatar color="grey-darken-1" size="96">
+            <img
+              :src="!!authStore.user ? authStore.user.image : ''"
+              width="96"
+              height="96"
+            />
+          </v-avatar>
           {{ authStore.user.name }}
           <v-chip v-if="!!myProfile.grade">
             {{ `${myProfile.grade}期生` }}
@@ -47,14 +47,20 @@
               !!myProfile.editor ? myProfile.editor : "未設定"
             }}
           </div>
-          <div>
-            Mattermost URL：{{
-              !!myProfile.timesLink ? myProfile.timesLink : "未設定"
-            }}
+          <div v-if="!!myProfile.timesLink">
+            Mattermost URL：<a :href="myProfile.timesLink">{{
+              myProfile.timesLink
+            }}</a>
           </div>
+          <div v-else>Mattermost URL：未設定</div>
         </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="success" :to="{ name: 'Profile' }">
+            プロフィール編集
+          </v-btn>
+        </v-card-actions>
       </v-card>
-      <v-btn :to="{ name: 'Profile' }" elevation="3">プロフィール編集</v-btn>
     </v-container>
   </v-main>
 </template>

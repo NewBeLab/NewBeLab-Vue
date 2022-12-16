@@ -4,13 +4,18 @@
     <v-container>
       <Alert />
       <h1>プロフィール編集</h1>
-      <v-form>
+      <v-form ref="form">
         <v-text-field
           v-model="myProfile.selfIntroduction"
           :counter="100"
           label="自己紹介文"
+          :rules="[lessThan100CharactersValidation]"
         ></v-text-field>
-        <v-text-field v-model="myProfile.grade" label="何期生か"></v-text-field>
+        <v-text-field
+          v-model="myProfile.grade"
+          label="何期生か"
+          :rules="[numberValidation]"
+        ></v-text-field>
         <v-select
           v-model="myProfile.commitment"
           :items="commitmentItems"
@@ -40,6 +45,7 @@
           v-model="myProfile.timesLink"
           :counter="100"
           label="MattermostのtimesのURL"
+          :rules="[lessThan100CharactersValidation, urlValidation]"
         ></v-text-field>
         <v-btn class="mr-2" color="success" @click="submit"> 更新 </v-btn>
         <v-btn :to="{ name: 'Mypage' }"> 戻る </v-btn>
@@ -75,6 +81,9 @@ onMounted(() => {
     });
 });
 
+const form = ref(null);
+
+// フォームの選択肢
 const commitmentItems = ["週1回", "週2〜3回", "週4〜5回", "毎日"];
 const positionItems = [
   "バックエンド",
@@ -97,27 +106,42 @@ const editorItems = [
   "Sublime Text",
 ];
 
+// バリデーション
+const lessThan100CharactersValidation = (value) =>
+  value.length <= 100 || "100文字以下で入力してください";
+const numberValidation = (value) =>
+  /^[0-9]+$/.test(value) || "半角数字で入力してください";
+const urlValidation = (value) =>
+  /^https?:\/\/[\w/:%#\$&\?\(\)~\.=\+\-]+$/.test(value) ||
+  "正しいURLを入力してください";
+
 const submit = () => {
-  // 値が入っていないパラメータを省く
-  const params = Object.entries(myProfile.value).reduce((prev, next) => {
-    const [key, value] = next;
-    if (!!value) {
-      prev[key] = value;
-    }
-    return prev;
-  }, {});
-  console.log(params);
-  axios
-    .patch(`/profiles/${authStore.user.id}`, {
-      profile: toUnderscoreCaseObject(params),
-    })
-    .then(() => {
-      alertStore.setAlert("プロフィールを更新しました");
-      router.push("/mypage");
-    })
-    .catch((error) => {
+  form.value.validate().then((data) => {
+    if (data.valid) {
+      // バリデーションに成功した場合
+      // 値が入っていないパラメータを省く
+      const params = Object.entries(myProfile.value).reduce((prev, next) => {
+        const [key, value] = next;
+        if (!!value) {
+          prev[key] = value;
+        }
+        return prev;
+      }, {});
+      axios
+        .patch(`/profiles/${authStore.user.id}`, {
+          profile: toUnderscoreCaseObject(params),
+        })
+        .then(() => {
+          alertStore.setAlert("プロフィールを更新しました");
+          router.push("/mypage");
+        })
+        .catch((error) => {
+          alertStore.setAlert("プロフィールの更新に失敗しました", "error");
+        });
+    } else {
+      // バリデーションに失敗した場合
       alertStore.setAlert("プロフィールの更新に失敗しました", "error");
-      console.log(error);
-    });
+    }
+  });
 };
 </script>

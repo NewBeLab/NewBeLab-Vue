@@ -6,14 +6,14 @@ export const useAlertStore = defineStore("alert", {
     type: null, //success, info, warning, errorの4種類
   }),
   actions: {
-    setAlert(message, type = "success", timeout = 3000) {
+    setAlert(message, type = "success") {
       this.message = message;
       this.type = type;
 
-      // timeoutミリ秒が経過するとリセットされる
+      // 3000ミリ秒が経過するとリセットされる
       setTimeout(() => {
         this.$reset();
-      }, timeout);
+      }, 3000);
     },
   },
 });

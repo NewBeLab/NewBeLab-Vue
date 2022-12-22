@@ -1,34 +1,29 @@
-<!-- VuetifyのAlertsコンポーネントを使用 -->
-<!-- https://next.vuetifyjs.com/en/components/alerts/ -->
+<!-- VuetifyのSnackbarsコンポーネントを使用 -->
+<!-- https://next.vuetifyjs.com/en/components/snackbars/ -->
 
 <template>
-  <div v-if="hasAlertMessage">
-    <v-alert :color="alertColor" :type="alertStore.type">{{
-      alertStore.message
-    }}</v-alert>
-  </div>
+  <v-snackbar v-model="snackbar" :color="color" timeout="3000">{{
+    message
+  }}</v-snackbar>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { onMounted, ref } from "vue";
 import { useAlertStore } from "@/stores/alert";
 
+const snackbar = ref(false);
+const message = ref("");
+const color = ref("");
 const alertStore = useAlertStore();
 
-const hasAlertMessage = computed(() => {
-  return alertStore.message !== null;
-});
-
-const alertColor = computed(() => {
-  if (alertStore.type === "success") {
-    return "green";
-  } else if (alertStore.type === "info") {
-    return "blue";
-  } else if (alertStore.type === "warning") {
-    return "orange";
-  } else {
-    //alertStore.type === "error"
-    return "red";
+const setSnackbar = () => {
+  if (alertStore.message) {
+    snackbar.value = true;
+    message.value = alertStore.message;
+    color.value = alertStore.type;
   }
-});
+};
+
+onMounted(setSnackbar);
+alertStore.$subscribe(setSnackbar);
 </script>

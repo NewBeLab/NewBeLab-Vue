@@ -48,8 +48,8 @@
             }}
           </div>
           <div v-if="!!myProfile.timesLink">
-            Mattermost URL：<a :href="myProfile.timesLink">{{
-              myProfile.timesLink
+            Mattermost URL：<a :href="defaultTimesUrl + myProfile.timesLink">{{
+              defaultTimesUrl + myProfile.timesLink
             }}</a>
           </div>
           <div v-else>Mattermost URL：未設定</div>
@@ -75,6 +75,7 @@ import { toCamelCaseObject } from "@/plugins/convert";
 const authStore = useAuthStore();
 const axios = inject("axios");
 const myProfile = ref([]);
+const defaultTimesUrl = "https://chat.runteq.jp/runteq/channels/";
 
 onMounted(() => {
   // 自分のプロフィール情報を取得

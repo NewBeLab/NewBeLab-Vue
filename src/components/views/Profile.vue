@@ -15,6 +15,7 @@
           v-model="myProfile.grade"
           label="何期生か"
           :rules="[numberValidation]"
+          suffix="期生"
         ></v-text-field>
         <v-select
           v-model="myProfile.commitment"
@@ -43,9 +44,10 @@
         ></v-select>
         <v-text-field
           v-model="myProfile.timesLink"
-          :counter="100"
+          :counter="50"
           label="MattermostのtimesのURL"
-          :rules="[lessThan100CharactersValidation, urlValidation]"
+          :rules="[lessThan50CharactersValidation, urlValidation]"
+          prefix="https://chat.runteq.jp/runteq/channels/"
         ></v-text-field>
         <v-btn class="mr-2" color="success" @click="submit"> 更新 </v-btn>
         <v-btn :to="{ name: 'Mypage' }"> 戻る </v-btn>
@@ -55,7 +57,7 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref } from "vue";
+import { inject, onMounted, ref, reactive, watch } from "vue";
 import Header from "@/components/parts/Header.vue";
 import Alert from "@/components/parts/Alert.vue";
 import { useAuthStore } from "@/stores/auth";
@@ -67,14 +69,26 @@ const authStore = useAuthStore();
 const alertStore = useAlertStore();
 const axios = inject("axios");
 const router = useRouter();
-const myProfile = ref([]);
+const myProfile = reactive({
+  selfIntroduction: "",
+  grade: "",
+  commitment: "",
+  position: "",
+  motivation: "",
+  phase: "",
+  editor: "",
+  timesLink: "",
+});
 
 onMounted(() => {
   // 自分のプロフィール情報を取得
   axios
     .get(`/profiles/${authStore.user.id}`)
     .then((response) => {
-      myProfile.value = toCamelCaseObject(response.data);
+      const responseObject = toCamelCaseObject(response.data);
+      Object.keys(myProfile).forEach((key) => {
+        myProfile[key] = responseObject[key];
+      });
     })
     .catch((error) => {
       console.log(error);
@@ -108,40 +122,54 @@ const editorItems = [
 
 // バリデーション
 const lessThan100CharactersValidation = (value) =>
-  value.length <= 100 || "100文字以下で入力してください";
+  !value || value.length <= 100 || "100文字以下で入力してください";
+const lessThan50CharactersValidation = (value) =>
+  !value || value.length <= 50 || "50文字以下で入力してください";
 const numberValidation = (value) =>
-  /^[0-9]+$/.test(value) || "半角数字で入力してください";
+  !value || /^[0-9]+$/.test(value) || "半角数字で入力してください";
 const urlValidation = (value) =>
-  /^https?:\/\/[\w/:%#\$&\?\(\)~\.=\+\-]+$/.test(value) ||
+  !value ||
+  /[\w/:%#\$&\?\(\)~\.=\+\-]+$/.test(value) ||
   "正しいURLを入力してください";
+
+// timesLinkを監視して、先頭にURLの共通部分が含まれていれば削除する
+watch(
+  () => myProfile.timesLink,
+  () => {
+    const defaultTimesUrl = "https://chat.runteq.jp/runteq/channels/";
+    if (myProfile.timesLink.startsWith(defaultTimesUrl)) {
+      myProfile.timesLink = myProfile.timesLink.replace(defaultTimesUrl, "");
+    }
+  }
+);
 
 const submit = () => {
   form.value.validate().then((data) => {
-    if (data.valid) {
-      // バリデーションに成功した場合
-      // 値が入っていないパラメータを省く
-      const params = Object.entries(myProfile.value).reduce((prev, next) => {
-        const [key, value] = next;
-        if (!!value) {
-          prev[key] = value;
-        }
-        return prev;
-      }, {});
-      axios
-        .patch(`/profiles/${authStore.user.id}`, {
-          profile: toUnderscoreCaseObject(params),
-        })
-        .then(() => {
-          alertStore.setAlert("プロフィールを更新しました");
-          router.push("/mypage");
-        })
-        .catch((error) => {
-          alertStore.setAlert("プロフィールの更新に失敗しました", "error");
-        });
-    } else {
+    if (!data.valid) {
       // バリデーションに失敗した場合
       alertStore.setAlert("プロフィールの更新に失敗しました", "error");
+      return;
     }
+    // バリデーションに成功した場合
+    // 値が入っていないパラメータを省く
+    const params = Object.entries(myProfile).reduce((prev, next) => {
+      const [key, value] = next;
+      if (!!value) {
+        prev[key] = value;
+      }
+      return prev;
+    }, {});
+    axios
+      .patch(`/profiles/${authStore.user.id}`, {
+        profile: toUnderscoreCaseObject(params),
+      })
+      .then(() => {
+        alertStore.setAlert("プロフィールを更新しました");
+        router.push("/mypage");
+      })
+      .catch((error) => {
+        alertStore.setAlert("プロフィールの更新に失敗しました", "error");
+      });
   });
 };
 </script>

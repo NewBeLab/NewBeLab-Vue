@@ -1,8 +1,8 @@
 <template>
   <Header />
-  <v-main class="bg-grey-lighten-3">
+  <v-main>
     <v-container>
-      <h1>Top</h1>
+      <div class="text-h3">Top</div>
       <div v-if="!loggedIn"><LoginButton /></div>
     </v-container>
   </v-main>

@@ -1,5 +1,7 @@
 <template>
-  <v-btn :href="GITHUB_URL" elevation="3">GitHubログイン</v-btn>
+  <v-btn :href="GITHUB_URL" elevation="3" id="primary-btn"
+    >GitHubログイン</v-btn
+  >
 </template>
 
 <script setup>
@@ -11,3 +13,10 @@ const GITHUB_URL =
   import.meta.env.VITE_SERVICE_URL +
   "callback";
 </script>
+
+<style>
+#primary-btn {
+  color: white;
+  background: #fc5c6c;
+}
+</style>

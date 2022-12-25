@@ -137,7 +137,7 @@ watch(
   () => myProfile.timesLink,
   () => {
     const defaultTimesUrl = "https://chat.runteq.jp/runteq/channels/";
-    if (myProfile.timesLink.startsWith(defaultTimesUrl)) {
+    if (myProfile.timesLink?.startsWith(defaultTimesUrl)) {
       myProfile.timesLink = myProfile.timesLink.replace(defaultTimesUrl, "");
     }
   }

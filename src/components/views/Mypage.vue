@@ -30,6 +30,11 @@
           </div>
           <div v-else>Mattermost URL：未設定</div>
         </v-card-text>
+        <v-card-text>
+          <v-chip v-for="tag in myProfile.tags">
+            {{ tag }}
+          </v-chip>
+        </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn color="success" :to="{ name: 'Profile' }">
@@ -42,15 +47,25 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref } from "vue";
+import { inject, onMounted, reactive } from "vue";
 import Header from "@/components/parts/Header.vue";
 import Alert from "@/components/parts/Alert.vue";
 import { useAuthStore } from "@/stores/auth";
-import { toCamelCaseObject } from "@/plugins/convert";
+import { toUnderscoreCase } from "@/plugins/convert";
 
 const authStore = useAuthStore();
 const axios = inject("axios");
-const myProfile = ref([]);
+const myProfile = reactive({
+  selfIntroduction: "",
+  grade: "",
+  commitment: "",
+  position: "",
+  motivation: "",
+  phase: "",
+  editor: "",
+  timesLink: "",
+  tags: [],
+});
 const defaultTimesUrl = "https://chat.runteq.jp/runteq/channels/";
 
 onMounted(() => {
@@ -58,7 +73,13 @@ onMounted(() => {
   axios
     .get(`/profiles/${authStore.user.id}`)
     .then((response) => {
-      myProfile.value = toCamelCaseObject(response.data);
+      Object.keys(myProfile).forEach((key) => {
+        if (key === "tags") {
+          myProfile[key] = response.data[key].map((obj) => obj.name);
+        } else {
+          myProfile[key] = response.data.profile[toUnderscoreCase(key)];
+        }
+      });
     })
     .catch((error) => {
       console.log(error);

@@ -1,6 +1,7 @@
 <template>
   <Header />
   <v-main>
+    <Alert />
     <div id="top-image">
       <v-container>
         <v-row align-content="center" style="min-height: 800px">

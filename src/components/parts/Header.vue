@@ -73,7 +73,12 @@ const logout = () => {
       router.push("/");
     })
     .catch((error) => {
-      alertStore.setAlert("ログアウトに失敗しました", "error");
+      // 強制ログアウト
+      // 何らかの事情でCookieが消えてしまったとき
+      authStore.logout();
+      removeCookie();
+      alertStore.setAlert("ログアウトしました");
+      router.push("/");
     });
 };
 
@@ -87,10 +92,10 @@ const links = [
     name: "User",
     name_ja: "ユーザーを探す",
   },
-  {
+  /*{
     name: "Idea",
     name_ja: "アイデアを探す",
-  },
+  },*/
 ];
 </script>
 

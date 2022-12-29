@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <v-main class="bg-grey-lighten-3">
+  <v-main>
     <v-container>
       <Alert />
       <h1>プロフィール編集</h1>
@@ -70,7 +70,7 @@
             </v-chip>
           </template>
         </v-combobox>
-        <v-btn class="mr-2" color="success" @click="submit"> 更新 </v-btn>
+        <v-btn class="mr-2" color="primary" @click="submit"> 更新 </v-btn>
         <v-btn :to="{ name: 'Mypage' }"> 戻る </v-btn>
       </v-form>
     </v-container>

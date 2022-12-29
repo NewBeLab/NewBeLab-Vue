@@ -34,6 +34,7 @@ import { computed } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import Header from "@/components/parts/Header.vue";
 import LoginButton from "@/components/parts/LoginButton.vue";
+import Alert from "@/components/parts/Alert.vue";
 
 const authStore = useAuthStore();
 

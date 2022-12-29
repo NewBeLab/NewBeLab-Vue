@@ -4,7 +4,8 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
-import { useRoute } from "vue-router";
+import { useAlertStore } from "@/stores/alert";
+import { useRoute, useRouter } from "vue-router";
 import { inject, onMounted } from "vue";
 import { useCookies } from "vue3-cookies";
 
@@ -12,6 +13,7 @@ import { useCookies } from "vue3-cookies";
 onMounted(() => {
   // vue3では$routeでクエリー情報を取得できないので、useRouteを使う
   const route = useRoute();
+  const router = useRouter();
 
   // route.queryには、リダイレクトされた際に付与されたクエリパラメータが格納されている
   // 今回は、access_token、client_id、expiry、uidが格納されている
@@ -30,6 +32,8 @@ onMounted(() => {
   // 共通処理の内容としては、authStoreのtokenをheadersにセットしている。
   const axios = inject("axios");
 
+  const alertStore = useAlertStore();
+
   // auth/validate_tokenにリクエストを送ることで、user情報を取得できる
   axios
     .get("/auth/validate_token")
@@ -40,11 +44,15 @@ onMounted(() => {
       // 取得したuser情報をCookieに格納する
       const { cookies } = useCookies();
       cookies.set("user", response.data.data);
-      window.location.href = "/";
+      alertStore.setAlert("ログインしました");
+      router.push("/mypage");
     })
     .catch((error) => {
-      alert("ログインに失敗しました。再度ログインしてください。");
-      window.location.href = "/";
+      alertStore.setAlert(
+        "ログインに失敗しました。再度ログインしてください",
+        "error"
+      );
+      router.push("/");
     });
 });
 </script>

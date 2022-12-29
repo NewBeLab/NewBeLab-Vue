@@ -13,7 +13,11 @@
       <div v-if="loggedIn">
         <!-- ログイン時のヘッダー -->
         <v-avatar class="mr-4 ml-10" color="grey-darken-1" size="32">
-          <img :src="authStore.user.image" width="32" height="32" />
+          <img
+            :src="!!authStore.user ? authStore.user.image : ''"
+            width="32"
+            height="32"
+          />
         </v-avatar>
 
         <v-btn v-for="link in links" :key="link" variant="text">
@@ -38,11 +42,15 @@
 
 <script setup>
 import { computed, inject } from "vue";
+import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
+import { useAlertStore } from "@/stores/alert";
 import { removeCookie } from "@/plugins/cookie";
 import LoginButton from "@/components/parts/LoginButton.vue";
 
 const authStore = useAuthStore();
+const alertStore = useAlertStore();
+const router = useRouter();
 
 // ログイン中かどうかを返す算出プロパティ
 // ログイン中であればtrueを返す
@@ -61,10 +69,11 @@ const logout = () => {
       authStore.logout();
       removeCookie();
       // Topへ遷移
-      window.location.href = "/";
+      alertStore.setAlert("ログアウトしました");
+      router.push("/");
     })
     .catch((error) => {
-      alert("ログアウトに失敗しました。");
+      alertStore.setAlert("ログアウトに失敗しました", "error");
     });
 };
 

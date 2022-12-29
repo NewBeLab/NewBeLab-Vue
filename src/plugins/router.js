@@ -4,6 +4,7 @@ import Top from "@/components/views/Top.vue";
 import Mypage from "@/components/views/Mypage.vue";
 import User from "@/components/views/User.vue";
 import Idea from "@/components/views/Idea.vue";
+import Profile from "@/components/views/Profile.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/idea",
     name: "Idea",
     component: Idea,
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
   },
 ];
 

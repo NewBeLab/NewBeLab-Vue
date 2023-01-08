@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useAlertStore = defineStore("alert", {
   state: () => ({
     message: null,
-    type: null, //success, info, warning, errorの4種類
+    type: null, //success, errorの2種類
   }),
   actions: {
     setAlert(message, type = "success") {

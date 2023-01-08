@@ -1,9 +1,9 @@
 <template>
   <Header />
-  <v-main class="bg-grey-lighten-3">
+  <v-main>
     <v-container>
       <Alert />
-      <h1>Idea</h1>
+      <h1>アイデアを探す</h1>
     </v-container>
   </v-main>
 </template>

@@ -49,6 +49,27 @@
           :rules="[lessThan50CharactersValidation, urlValidation]"
           prefix="https://chat.runteq.jp/runteq/channels/"
         ></v-text-field>
+        <v-combobox
+          v-model="myProfile.tags"
+          :items="tagItems"
+          chips
+          clearable
+          label="タグ"
+          multiple
+          prepend-icon="mdi-filter-variant"
+          solo
+        >
+          <template v-slot:selection="{ attrs, item, select, selected }">
+            <v-chip
+              v-bind="attrs"
+              :input-value="selected"
+              close
+              @click="select"
+            >
+              {{ item }}
+            </v-chip>
+          </template>
+        </v-combobox>
         <v-btn class="mr-2" color="success" @click="submit"> 更新 </v-btn>
         <v-btn :to="{ name: 'Mypage' }"> 戻る </v-btn>
       </v-form>
@@ -63,12 +84,13 @@ import Alert from "@/components/parts/Alert.vue";
 import { useAuthStore } from "@/stores/auth";
 import { useAlertStore } from "@/stores/alert";
 import { useRouter } from "vue-router";
-import { toCamelCaseObject, toUnderscoreCaseObject } from "@/plugins/convert";
+import { toUnderscoreCase, toUnderscoreCaseObject } from "@/plugins/convert";
 
 const authStore = useAuthStore();
 const alertStore = useAlertStore();
 const axios = inject("axios");
 const router = useRouter();
+const form = ref(null);
 const myProfile = reactive({
   selfIntroduction: "",
   grade: "",
@@ -78,24 +100,8 @@ const myProfile = reactive({
   phase: "",
   editor: "",
   timesLink: "",
+  tags: [],
 });
-
-onMounted(() => {
-  // 自分のプロフィール情報を取得
-  axios
-    .get(`/profiles/${authStore.user.id}`)
-    .then((response) => {
-      const responseObject = toCamelCaseObject(response.data);
-      Object.keys(myProfile).forEach((key) => {
-        myProfile[key] = responseObject[key];
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-
-const form = ref(null);
 
 // フォームの選択肢
 const commitmentItems = ["週1回", "週2〜3回", "週4〜5回", "毎日"];
@@ -119,6 +125,7 @@ const editorItems = [
   "NoEditor",
   "Sublime Text",
 ];
+const tagItems = ref([]);
 
 // バリデーション
 const lessThan100CharactersValidation = (value) =>
@@ -137,11 +144,40 @@ watch(
   () => myProfile.timesLink,
   () => {
     const defaultTimesUrl = "https://chat.runteq.jp/runteq/channels/";
-    if (myProfile.timesLink.startsWith(defaultTimesUrl)) {
+    if (myProfile.timesLink?.startsWith(defaultTimesUrl)) {
       myProfile.timesLink = myProfile.timesLink.replace(defaultTimesUrl, "");
     }
   }
 );
+
+onMounted(() => {
+  // タグ一覧を取得
+  axios
+    .get(`/tags`)
+    .then((response) => {
+      Object.keys(response.data).forEach((key) => {
+        tagItems.value.push(response.data[key].name);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  // 自分のプロフィール情報を取得
+  axios
+    .get(`/profiles/${authStore.user.id}`)
+    .then((response) => {
+      Object.keys(myProfile).forEach((key) => {
+        if (key === "tags") {
+          myProfile[key] = response.data[key].map((obj) => obj.name);
+        } else {
+          myProfile[key] = response.data.profile[toUnderscoreCase(key)];
+        }
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 
 const submit = () => {
   form.value.validate().then((data) => {
@@ -151,10 +187,12 @@ const submit = () => {
       return;
     }
     // バリデーションに成功した場合
-    // 値が入っていないパラメータを省く
+    // パラメータの変換
     const params = Object.entries(myProfile).reduce((prev, next) => {
       const [key, value] = next;
-      if (!!value) {
+      if (key === "tags") {
+        prev[key] = value.join(",");
+      } else {
         prev[key] = value;
       }
       return prev;

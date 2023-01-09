@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <v-main class="bg-grey-lighten-3">
+  <v-main>
     <v-container>
       <Alert />
       <h1>マイページ</h1>
@@ -10,7 +10,7 @@
             <img :src="authStore?.user?.image || ''" width="96" height="96" />
           </v-avatar>
           {{ authStore?.user?.name }}
-          <v-chip v-if="!!myProfile?.grade">
+          <v-chip color="primary" v-if="!!myProfile?.grade">
             {{ `${myProfile?.grade}期生` }}
           </v-chip>
         </v-card-title>
@@ -29,15 +29,17 @@
             }}</a>
           </div>
           <div v-else>Mattermost URL：未設定</div>
-        </v-card-text>
-        <v-card-text>
-          <v-chip v-for="tag in myProfile.tags">
+          <v-chip
+            color="primary"
+            class="mt-2 mr-2"
+            v-for="tag in myProfile.tags"
+          >
             {{ tag }}
           </v-chip>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn color="success" :to="{ name: 'Profile' }">
+          <v-btn color="primary" :to="{ name: 'Profile' }">
             プロフィール編集
           </v-btn>
         </v-card-actions>

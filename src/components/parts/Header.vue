@@ -1,10 +1,14 @@
 <template>
-  <v-app-bar flat>
+  <v-app-bar flat id="header-gradient">
     <v-container class="fill-height d-flex align-center">
       <!-- 共通ヘッダー -->
-      <div class="mr-10 ml-10">
-        <router-link :to="{ name: 'Top' }">NewBeLab</router-link>
-      </div>
+      <v-app-bar-title>
+        <router-link
+          :to="{ name: 'Top' }"
+          style="text-decoration: none; color: inherit"
+          >NewBeLab</router-link
+        >
+      </v-app-bar-title>
       <!-- 共通ヘッダーここまで -->
       <div v-if="loggedIn">
         <!-- ログイン時のヘッダー -->
@@ -69,7 +73,12 @@ const logout = () => {
       router.push("/");
     })
     .catch((error) => {
-      alertStore.setAlert("ログアウトに失敗しました", "error");
+      // 強制ログアウト
+      // 何らかの事情でCookieが消えてしまったとき
+      authStore.logout();
+      removeCookie();
+      alertStore.setAlert("ログアウトしました");
+      router.push("/");
     });
 };
 
@@ -83,9 +92,15 @@ const links = [
     name: "User",
     name_ja: "ユーザーを探す",
   },
-  {
+  /*{
     name: "Idea",
     name_ja: "アイデアを探す",
-  },
+  },*/
 ];
 </script>
+
+<style>
+#header-gradient {
+  background: linear-gradient(to right, #ffe6e9, #c3b1ff, #22cadf);
+}
+</style>

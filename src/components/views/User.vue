@@ -24,6 +24,7 @@
             elevation="4"
             hover
             :class="'hover-change'"
+            @click="profile.isShowProfile = !profile.isShowProfile"
           >
             <!-- アイコン -->
             <v-row justify="center">
@@ -56,7 +57,7 @@
             </p>
             <v-divider insent class="mt-4 mx-6" />
 
-            <v-card-text class="profile mb-0">
+            <v-card-text v-if="profile.isShowProfile" class="profile mb-0">
               <!-- profile.profileの各情報があるものだけ表示する -->
               <p class="text-body-1">
                 <span class="font-weight-bold">コミット</span>：
@@ -88,6 +89,20 @@
                   class="text-body-1"
                   v-if="profile.profile.timesLink"
                   >{{ profile.profile.timesLink }}
+                </a>
+              </p>
+            </v-card-text>
+            <v-card-text v-else>
+              <v-img
+                height="100%"
+                width="100%"
+                :src="`https://grass-graph.appspot.com/images/${profile.username}.png`"
+                class="mt-4"
+              ></v-img>
+              <p class="text-body-1 font-weight-bold mt-2">
+                <span class="font-weight-bold mx-3">GitHub</span>：
+                <a :href="`https://github.com/${profile.username}`">
+                  {{ profile.username }}のGitHub
                 </a>
               </p>
             </v-card-text>
@@ -123,7 +138,7 @@ import Alert from "@/components/parts/Alert.vue";
 
 import { useAlertStore } from "@/stores/alert";
 import { useAuthStore } from "@/stores/auth";
-import { toCamelCaseObject, toCamelCase } from "@/plugins/convert";
+import { toCamelCaseObject } from "@/plugins/convert";
 
 const alertStore = useAlertStore();
 const authStore = useAuthStore();
@@ -141,7 +156,7 @@ function fetchProfiles() {
     .get("/profiles", {
       params: {
         page: page.value,
-        per_page: 10,
+        per: 6,
       },
     })
     .then(({ data }) => {
@@ -152,6 +167,7 @@ function fetchProfiles() {
           return {
             ...user,
             profile: toCamelCaseObject(user.profile),
+            isShowProfile: true,
           };
         });
       profiles.value = filteredData;

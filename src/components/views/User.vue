@@ -90,6 +90,7 @@
                   v-if="profile.profile.timesLink"
                   >{{ profile.profile.timesLink }}
                 </a>
+                <span v-else style="display:inline">未設定</span>
               </p>
             </v-card-text>
             <v-card-text v-else>
@@ -137,11 +138,9 @@ import Header from "@/components/parts/Header.vue";
 import Alert from "@/components/parts/Alert.vue";
 
 import { useAlertStore } from "@/stores/alert";
-import { useAuthStore } from "@/stores/auth";
 import { toCamelCaseObject } from "@/plugins/convert";
 
 const alertStore = useAlertStore();
-const authStore = useAuthStore();
 const axios = inject("axios");
 const profiles = ref([]);
 const page = ref(1);
@@ -161,15 +160,13 @@ function fetchProfiles() {
     })
     .then(({ data }) => {
       totalPages.value = data.total_pages;
-      const filteredData = data.profiles
-        .filter((user) => user.id !== authStore.user.id)
-        .map((user) => {
-          return {
-            ...user,
-            profile: toCamelCaseObject(user.profile),
-            isShowProfile: true,
-          };
-        });
+      const filteredData = data.profiles.map((user) => {
+        return {
+          ...user,
+          profile: toCamelCaseObject(user.profile),
+          isShowProfile: true,
+        };
+      });
       profiles.value = filteredData;
       window.scrollTo(0, 0);
     })

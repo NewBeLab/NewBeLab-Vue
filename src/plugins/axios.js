@@ -11,7 +11,7 @@ axios.interceptors.request.use((request) => {
 
 export const axiosInstance = axios.create({
   // ベースURLとクレデンシャルの設定
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
 });
 

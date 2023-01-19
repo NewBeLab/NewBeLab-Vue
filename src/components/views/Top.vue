@@ -6,27 +6,55 @@
       <v-container>
         <v-row align-content="center" style="min-height: 800px">
           <v-col align="center">
-            <div class="text-h3">見出し見出し見出し</div>
-            <div class="text-subtitle-1">
-              この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を
+            <div class="text-h3">NewBeLabとは</div>
+            <div class="text-h5 mt-10">
+              <p>
+                初心者を意味する"Newbie"と、研究室を意味する"Lab"を合わせた造語です。
+              </p>
+              <p class="mt-2">
+                チーム開発に興味はあるけど一歩踏み出せない駆け出しエンジニアをそっと支援すること。
+              </p>
+              <p class="mt-12">
+                そして、新たな価値を生み出すラボを作り出すような
+              </p>
+              <p class="mt-2">
+                そんなサービスでありたいという願いを込めています。
+              </p>
             </div>
-            <div v-if="!loggedIn"><LoginButton /></div>
+            <div v-if="!loggedIn" class="mt-16">
+              <LoginButton class="mb-0 pb-0" />
+              <v-row justify="center">
+                <iframe
+                  src="https://giphy.com/embed/l2QZSDxJmnQKc16a4"
+                  width="12%"
+                  height="35%"
+                  frameBorder="0"
+                >
+                </iframe>
+              </v-row>
+            </div>
           </v-col>
         </v-row>
       </v-container>
     </div>
-    <div id="top-color">
+    <!-- <div id="top-color">
       <v-container>
         <v-row align-content="center" style="min-height: 800px">
           <v-col align="center">
-            <div class="text-h3">見出し見出し見出し</div>
-            <div class="text-subtitle-1">
-              この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を
+            <div class="text-h2">How To NewBeLab?</div>
+            <p class="text-h3 mt-16">
+              ステップ１
+            </p>
+            <div class="text-h5 mt-12">
+            <p>
+              自分のプロフィールを充実させよう！
+            </p>
+
             </div>
           </v-col>
         </v-row>
       </v-container>
-    </div>
+    </div> -->
   </v-main>
 </template>
 
@@ -55,5 +83,10 @@ const loggedIn = computed(() => {
 }
 #top-color {
   background: #ffe6e9;
+}
+/* iframeで表示しているgifをクリックした際に、ページ遷移しないようにCSSをあてている */
+iframe{
+  pointer-events:none;
+  z-index: 1;
 }
 </style>

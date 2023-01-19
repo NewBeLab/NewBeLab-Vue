@@ -3,7 +3,7 @@
   <v-main>
     <v-container>
       <Alert />
-      <h1>プロフィール編集</h1>
+      <p class="text-h4 my-12 ml-5">プロフィール編集</p>
       <v-form ref="form">
         <v-text-field
           v-model="myProfile.selfIntroduction"

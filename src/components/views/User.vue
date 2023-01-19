@@ -156,6 +156,7 @@ function fetchProfiles() {
       params: {
         page: page.value,
         per: 6,
+        q: { q: ""}
       },
     })
     .then(({ data }) => {

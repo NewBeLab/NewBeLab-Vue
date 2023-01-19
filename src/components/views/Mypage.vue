@@ -3,14 +3,14 @@
   <v-main>
     <v-container>
       <Alert />
-      <h1>マイページ</h1>
-      <v-card elevation="2" width="100%">
+      <p class="text-h4 my-12 ml-5">マイページ</p>
+      <v-card rounded="xl" elevation="4" width="100%">
         <v-card-title>
           <v-avatar color="grey-darken-1" size="96">
             <img :src="authStore?.user?.image || ''" width="96" height="96" />
           </v-avatar>
           {{ authStore?.user?.name }}
-          <v-chip color="primary" v-if="!!myProfile?.grade">
+          <v-chip v-if="!!myProfile?.grade">
             {{ `${myProfile?.grade}期生` }}
           </v-chip>
         </v-card-title>

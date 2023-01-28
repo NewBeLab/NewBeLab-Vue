@@ -47,67 +47,73 @@
           <v-row class="mt-16 ml-16 pl-16">
             <v-col>
               <p class="text-h3 mt-16">STEP 1</p>
-              <div class="text-h5 mt-12">
-                <p>GitHub連携でログイン</p>
-              </div>
-              <v-img
-                src="/Tablet_login-cuate.svg"
-                align-content="center"
-              />
+              <p class="text-h5 mt-12">GitHub連携でログイン</p>
+              <v-img src="/Tablet_login-cuate.svg" align-content="center" />
             </v-col>
           </v-row>
         </v-container>
 
         <v-container class="d-flex align-end flex-column">
-          <v-row  class="mr-12 pr-12">
+          <v-row class="mr-12 pr-12">
             <v-col>
               <p class="text-h3">STEP 2</p>
-              <div class="text-h5 mt-12">
-                <p>プロフィールを充実させよう</p>
-              </div>
+              <p class="text-h5 mt-12">プロフィールを充実させよう</p>
+              <p class="text-subtitle mt-2">
+                チーム開発への意気込みや学習状況を入力しよう
+              </p>
               <v-img src="/Forms-cuate.svg" width="80%" />
             </v-col>
           </v-row>
         </v-container>
 
         <v-container class="d-flex align-start flex-column">
-          <v-row  class="ml-16 pl-16">
+          <v-row class="ml-16 pl-16">
             <v-col>
               <p class="text-h3">STEP 3</p>
-              <div class="text-h5 mt-12">
-                <p>みんなのプロフィールをチェック</p>
-              </div>
+              <p class="text-h5 mt-12">みんなのプロフィールをチェック</p>
+              <p class="text-subtitle mt-2">
+                自分の考えに近い人、遠い人、いろんな価値観に触れてみよう
+              </p>
               <v-img src="/Inbox_cleanup-cuate.svg" width="80%" />
             </v-col>
           </v-row>
         </v-container>
 
         <v-container class="d-flex align-end flex-column">
-          <v-row  class="mr-12 pr-12">
+          <v-row class="mr-12 pr-12">
             <v-col>
               <p class="text-h3">STEP 4</p>
-              <div class="text-h5 mt-12">
-                <p>気になる人にTimesで声をかけてみよう</p>
-              </div>
+              <p class="text-h5 mt-12">気になる人に声をかけてみよう</p>
+              <p class="text-subtitle mt-2">
+                Times？Twitter？それともDiscord？
+              </p>
+              <p class="text-subtitle mt-2">
+                それぞれのやり方で声をかけてみよう
+              </p>
               <v-img src="/Gen_Z-amico.svg" width="70%" />
             </v-col>
           </v-row>
         </v-container>
 
         <v-container class="d-flex align-start flex-column">
-          <v-row  class="ml-16 pl-16">
+          <v-row class="ml-16 pl-16">
             <v-col>
               <p class="text-h3">STEP 5</p>
-                <p class="text-h5 mt-12">チーム開発を楽しもう！</p>
-                <p class="text-subtitle mt-6">わたしたちのサービスでは、</p>
-                <p class="text-subtitle mt-2">あえてサービス上のチャット機能はつけていません。</p>
-                <p class="text-subtitle mt-2">それぞれに合ったやり方で、一歩勇気を出して声をかけてみる。</p>
-                <p class="text-subtitle mt-2">そのチャレンジの先に素晴らしいチームができることを祈っています。</p>
+              <p class="text-h5 mt-12">チーム開発を楽しもう！</p>
+              <p class="text-subtitle mt-6">わたしたちのサービスでは、</p>
+              <p class="text-subtitle mt-2">
+                あえてサービス上のチャット機能はつけていません。
+              </p>
+              <p class="text-subtitle mt-2">
+                それぞれに合ったやり方で、一歩勇気を出して声をかけてみる。
+              </p>
+              <p class="text-subtitle mt-2">
+                そのチャレンジの先に素晴らしいチームができることを祈っています。
+              </p>
               <v-img src="/Pair_programming-rafiki.svg" />
             </v-col>
           </v-row>
         </v-container>
-
       </v-container>
     </div>
   </v-main>

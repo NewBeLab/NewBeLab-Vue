@@ -5,12 +5,14 @@
       <Alert />
       <p class="text-h4 my-12 ml-5">プロフィール編集</p>
       <v-form ref="form">
-        <v-text-field
+        <v-textarea
           v-model="myProfile.selfIntroduction"
           :counter="100"
           label="自己紹介文"
           :rules="[lessThan100CharactersValidation]"
-        ></v-text-field>
+          auto-grow
+          rows="1"
+        ></v-textarea>
         <v-text-field
           v-model="myProfile.grade"
           label="何期生か"

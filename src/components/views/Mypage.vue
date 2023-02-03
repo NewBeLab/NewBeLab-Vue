@@ -14,7 +14,7 @@
             {{ `${myProfile?.grade}期生` }}
           </v-chip>
         </v-card-title>
-        <v-card-subtitle>
+        <v-card-subtitle class="mt-3" style="white-space: pre-wrap;">
           {{ myProfile?.selfIntroduction || "自己紹介文が設定されていません" }}
         </v-card-subtitle>
         <v-card-text>

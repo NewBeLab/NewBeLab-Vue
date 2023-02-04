@@ -52,7 +52,7 @@
             <v-card-title class="text-h6 ml-4 font-weight-bold">
               自己紹介
             </v-card-title>
-            <p class="text-body-1 mx-8 pb-0 font-weight-thin">
+            <p class="text-body-1 mx-8 pb-0 font-weight-thin" style="white-space: pre-wrap;">
               {{ profile?.profile.selfIntroduction || "未設定😭" }}
             </p>
             <v-divider insent class="mt-4 mx-6" />

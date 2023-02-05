@@ -129,9 +129,9 @@
         :length="totalPages"
         :total-visible="6"
         class="mt-5"
-        @next="isFilterProfiles ? fetchFilterProfiles(q) : fetchProfiles"
-        @prev="isFilterProfiles ? fetchFilterProfiles(q) : fetchProfiles"
-        @click="isFilterProfiles ? fetchFilterProfiles(q) : fetchProfiles"
+        @next="isFilterProfiles ? fetchFilterProfiles(q) : fetchProfiles()"
+        @prev="isFilterProfiles ? fetchFilterProfiles(q) : fetchProfiles()"
+        @click="isFilterProfiles ? fetchFilterProfiles(q) : fetchProfiles()"
       >
       </v-pagination>
     </v-container>
